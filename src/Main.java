@@ -1,3 +1,8 @@
+import WordBankClasses.AnimalsWordBank;
+import WordBankClasses.FruitsWordBank;
+import WordBankClasses.ProgrammingLanguagesWordBank;
+
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -8,17 +13,43 @@ public class Main {
         // Display welcome message
         System.out.println("Hello, welcome to text-based Hangman!");
 
+        // Display topics message and allows the user to select from the topics listed
+        System.out.println("What topic of words would you like to play with?\n" +
+                           "(1): Fruits\n" +
+                           "(2): Animals\n" +
+                           "(3): Programming Languages");
+
+
         // Create Scanner object for the users input on the command line
         Scanner userInput = new Scanner(System.in);
 
-        // Create an ArrayList and populate it with a list of words
-        ArrayList<String> wordBank = new ArrayList<>();
-        wordBank.add("apple");
-        wordBank.add("orange");
-        wordBank.add("mango");
-        wordBank.add("watermelon");
-        wordBank.add("pineapple");
-        wordBank.add("cantaloupe");
+        // Declare an ArrayList for the word bank
+        ArrayList<String> wordBank = null;
+
+        // Selects the topic based on what the user entered
+        switch (userInput.next()) {
+            // If the user enters 1
+            case "1" -> {
+                // Add the ArrayList from the FruitsWordBank class to the word bank ArrayList
+                wordBank = new FruitsWordBank().fruitsWordBankArrayList();
+                System.out.println("You have chosen the Fruit Word Bank.\nBegin Guessing!");
+            }
+            case "2" -> {
+                // Add the ArrayList from the AnimalsWordBank class to the word bank ArrayList
+                wordBank = new AnimalsWordBank().animalsWordBankArrayList();
+                System.out.println("You have chosen the Animal Word Bank.\nBegin Guessing!");
+            }
+            case "3" -> {
+                // Add the ArrayList from the ProgrammingLanguagesWordBank class to the word bank ArrayList
+                wordBank = new ProgrammingLanguagesWordBank().programmingLanguagesWordBankArrayList();
+                System.out.println("You have chosen the Programming Languages Word Bank.\nBegin Guessing!");
+            }
+            default -> {
+                // If an invalid selection was entered then display error message and quit
+                System.err.println("You did not choose a valid Word Bank.");
+                System.exit(-1);
+            }
+        }
 
         // Create a Random object to choose a random word from the list
         Random randomWordIndex = new Random();
@@ -80,7 +111,7 @@ public class Main {
 
             // Displays the lose message if the number of wrong guesses equals or is greater than 6
             if (numberOfWrongGuesses >= 6) {
-                System.out.println("Oh no! You lose!");
+                System.out.println("Oh no! You lose! The word was \"" + randomWord + "\".");
                 userInput.close();
                 break;
                 // Displays the win message if the hiddenWordArrayList matches the randomWordArrayList
