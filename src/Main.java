@@ -1,15 +1,12 @@
-import WordBankClasses.AnimalsWordBank;
-import WordBankClasses.FruitsWordBank;
-import WordBankClasses.ProgrammingLanguagesWordBank;
-
-
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         // Display welcome message
         System.out.println("Hello, welcome to text-based Hangman!");
 
@@ -24,24 +21,27 @@ public class Main {
         Scanner userInput = new Scanner(System.in);
 
         // Declare an ArrayList for the word bank
-        ArrayList<String> wordBank = null;
+        ArrayList<String> wordBank = new ArrayList<>();
+
+        // Create a Scanner object to read the content of the file
+        Scanner readFile = null;
 
         // Selects the topic based on what the user entered
         switch (userInput.next()) {
             // If the user enters 1
             case "1" -> {
-                // Add the ArrayList from the FruitsWordBank class to the word bank ArrayList
-                wordBank = new FruitsWordBank().fruitsWordBankArrayList();
+                // Adds the FruitsWordBankTextFile to the scanner
+                readFile = new Scanner(new File("src/WordBankTextFiles/FruitsWordBankTextFile.txt"));
                 System.out.println("You have chosen the Fruit Word Bank.\nBegin Guessing!");
             }
             case "2" -> {
-                // Add the ArrayList from the AnimalsWordBank class to the word bank ArrayList
-                wordBank = new AnimalsWordBank().animalsWordBankArrayList();
+                // Adds the AnimalsWordBankTextFile to the scanner
+                readFile = new Scanner(new File("src/WordBankTextFiles/AnimalsWordBankTextFile.txt"));
                 System.out.println("You have chosen the Animal Word Bank.\nBegin Guessing!");
             }
             case "3" -> {
-                // Add the ArrayList from the ProgrammingLanguagesWordBank class to the word bank ArrayList
-                wordBank = new ProgrammingLanguagesWordBank().programmingLanguagesWordBankArrayList();
+                // Adds the ProgrammingLanguagesWordBankTextFile to the scanner
+                readFile = new Scanner(new File("src/WordBankTextFiles/ProgrammingLanguagesWordBankTextFile.txt"));
                 System.out.println("You have chosen the Programming Languages Word Bank.\nBegin Guessing!");
             }
             default -> {
@@ -50,6 +50,13 @@ public class Main {
                 System.exit(-1);
             }
         }
+
+        // Loop over the lines in the txt file
+        while (readFile.hasNextLine()) {
+            // Add each line to the word bank ArrayList
+            wordBank.add(readFile.nextLine());
+        }
+
 
         // Create a Random object to choose a random word from the list
         Random randomWordIndex = new Random();

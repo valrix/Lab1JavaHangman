@@ -1,0 +1,6 @@
+apple
+orange
+mango
+watermelon
+pineapple
+cantaloupe
