@@ -44,5 +44,51 @@ public class Main {
         for (String blank : hiddenWordArrayList) {
             System.out.print(blank + " ");
         }
+
+        // Display a new line for the user to write their input on
+        System.out.println();
+
+        // Create integer variable that holds the number of wrong guesses
+        int numberOfWrongGuesses = 0;
+
+        // Gameplay loop that only ends if you win or lose
+        do {
+            // Assign the users input to the variable guess
+            String guess = userInput.next();
+            // If the users guess exists in the randomWordSplitArrayList
+            if (randomWordSplitArrayList.contains(guess)) {
+                // Loop through the randomWordSplitArrayList and assign each index to i
+                for (int i = 0; i < randomWordSplitArrayList.size(); i++) {
+                    // If the guess exists in the randomWordSplitArray
+                    if (guess.equals(randomWordSplitArrayList.get(i))) {
+                        // Set the guess letter to the matching index of the hiddenWordArrayList
+                        hiddenWordArrayList.set(i, guess);
+                    }
+                }
+                // Display the hiddenWordSplitArray after each guess to show the user their progress
+                for (String blank : hiddenWordArrayList) {
+                    System.out.print(blank + " ");
+                }
+                // Display blank line for the user to write on
+                System.out.println();
+            } else {
+                // Increase the number of wrong guesses
+                numberOfWrongGuesses++;
+                // Display wrong guess message
+                System.out.println("Incorrect Guess, you have: " + numberOfWrongGuesses + "/6 wrong guesse(s).");
+            }
+
+            // Displays the lose message if the number of wrong guesses equals or is greater than 6
+            if (numberOfWrongGuesses >= 6) {
+                System.out.println("Oh no! You lose!");
+                userInput.close();
+                break;
+                // Displays the win message if the hiddenWordArrayList matches the randomWordArrayList
+            } else if (hiddenWordArrayList.equals(randomWordSplitArrayList)) {
+                System.out.println("Yay! You win!");
+                userInput.close();
+                break;
+            }
+        } while(numberOfWrongGuesses < 6 || hiddenWordArrayList.equals(randomWordSplitArrayList));
     }
 }
